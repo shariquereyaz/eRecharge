@@ -11,7 +11,8 @@ const website = ref('')
 const avatar_url = ref('')
 
 onMounted(() => {
-  getProfile()
+  getProfile(),
+  getWallet()
 })
 
 async function getProfile() {
@@ -31,6 +32,34 @@ async function getProfile() {
       username.value = data.username
       website.value = data.website
       avatar_url.value = data.avatar_url
+    }
+  } catch (error) {
+    alert(error.message)
+  } finally {
+    loading.value = false
+  }
+}
+
+async function getWallet() {
+    console.log("Inside getWallet() ")
+  try {
+    loading.value = true
+    const { user } = session.value
+
+    let { data, error, status } = await supabase
+      .from('wallet')
+      .select()
+      .eq('User_Id', user.id)
+      
+
+    if (error && status !== 406) throw error
+
+    if (data) {
+        console.log(data)
+        console.log(user.id)
+    //   username.value = data.username
+    //   website.value = data.website
+    //   avatar_url.value = data.avatar_url
     }
   } catch (error) {
     alert(error.message)
