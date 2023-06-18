@@ -9,6 +9,7 @@ const loading = ref(true)
 const username = ref('')
 const website = ref('')
 const avatar_url = ref('')
+const wallet=ref('')
 
 onMounted(() => {
   getProfile(),
@@ -56,6 +57,7 @@ async function getWallet() {
 
     if (data) {
         console.log(data)
+        wallet.value=data
     
     }
   } catch (error) {
@@ -123,6 +125,9 @@ async function signOut() {
         :value="loading ? 'Loading ...' : 'Update'"
         :disabled="loading"
       />
+    </div>
+    <div v-if="wallet.length!==0">
+{{wallet}}
     </div>
 
     <div style="padding:20px">
