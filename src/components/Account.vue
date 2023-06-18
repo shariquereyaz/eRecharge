@@ -10,12 +10,19 @@ const username = ref('')
 const website = ref('')
 const avatar_url = ref('')
 const wallet=ref('')
+var total=0
 
 onMounted(() => {
   getProfile(),
   getWallet()
+  
 })
-
+async function getTotal(wallet) {
+  wallet.forEach(element => {
+    total=total+element.Amount
+  });
+  return total;
+}
 async function getProfile() {
   try {
     loading.value = true
@@ -48,7 +55,7 @@ async function getWallet() {
 
     let { data, error, status } = await supabase
       .from('wallet')
-      .select('TransactionType,Amount,created_at')
+      .select('Comment,Amount,created_at')
       .eq('User_Id', user.id)
       
 
@@ -56,7 +63,7 @@ async function getWallet() {
 
     if (data) {
         wallet.value=data
-    
+    getTotal(data)
     }
   } catch (error) {
     alert(error.message)
@@ -131,7 +138,7 @@ async function signOut() {
 <tr>
         <th>Date/Time</th>
         <th>Amount</th>
-        <th>Type</th>
+        <th>Comment</th>
 </tr>
         </thead>
         <tbody>
@@ -139,8 +146,11 @@ async function signOut() {
 <tr v-for="row in wallet">
         <td>{{ new Date(row.created_at).toLocaleString() }}</td>
         <td>{{ row.Amount }}</td>
-        <td>{{ row.TransactionType }}</td>
+        <td>{{ row.Comment }}</td>
+       
     </tr>
+    Net= ₹{{total}}
+     
         </tbody>
       </table>
     </div>
