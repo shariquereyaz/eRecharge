@@ -42,7 +42,6 @@ async function getProfile() {
 }
 
 async function getWallet() {
-    console.log("Inside getWallet() ")
   try {
     loading.value = true
     const { user } = session.value
@@ -56,7 +55,6 @@ async function getWallet() {
     if (error && status !== 406) throw error
 
     if (data) {
-        console.log(data)
         wallet.value=data
     
     }
@@ -127,7 +125,7 @@ async function signOut() {
       />
     </div>
     <div v-if="wallet.length!==0">
-{{wallet}}
+{{wallet[0].TransactionType}}
     </div>
 
     <div style="padding:20px">
