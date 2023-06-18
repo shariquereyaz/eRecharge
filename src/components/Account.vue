@@ -99,6 +99,7 @@ async function signOut() {
     loading.value = false
   }
 }
+ 
 </script>
 
 <template>
@@ -136,7 +137,7 @@ async function signOut() {
         <tbody>
 
 <tr v-for="row in wallet">
-        <td>{{ row.created_at }}</td>
+        <td>{{ new Date(row.created_at).toLocaleString() }}</td>
         <td>{{ row.Amount }}</td>
         <td>{{ row.TransactionType }}</td>
     </tr>
