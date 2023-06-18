@@ -48,7 +48,7 @@ async function getWallet() {
 
     let { data, error, status } = await supabase
       .from('wallet')
-      .select()
+      .select('TransactionType,Amount,created_at')
       .eq('User_Id', user.id)
       
 
@@ -56,10 +56,7 @@ async function getWallet() {
 
     if (data) {
         console.log(data)
-        console.log(user.id)
-    //   username.value = data.username
-    //   website.value = data.website
-    //   avatar_url.value = data.avatar_url
+    
     }
   } catch (error) {
     alert(error.message)
