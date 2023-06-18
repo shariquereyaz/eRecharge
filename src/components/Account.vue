@@ -125,7 +125,23 @@ async function signOut() {
       />
     </div>
     <div v-if="wallet.length!==0">
-{{wallet[0].TransactionType}}
+      <table class="table">
+        <thead>
+<tr>
+        <th>Date/Time</th>
+        <th>Amount</th>
+        <th>Type</th>
+</tr>
+        </thead>
+        <tbody>
+
+<tr v-for="row in wallet">
+        <td>{{ row.created_at }}</td>
+        <td>{{ row.Amount }}</td>
+        <td>{{ row.TransactionType }}</td>
+    </tr>
+        </tbody>
+      </table>
     </div>
 
     <div style="padding:20px">
@@ -133,3 +149,9 @@ async function signOut() {
     </div>
   </form>
 </template>
+<style scoped>
+.table{
+  border: 10px;
+  border-block-color: red;
+}
+</style>
